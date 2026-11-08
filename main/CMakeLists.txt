@@ -1,0 +1,19 @@
+idf_component_register(
+    SRCS
+        "main.c"
+        "emu_harness.c"
+        "ssd1306.c"
+        "kbd_serial.c"
+        "speaker.c"
+        "settings_store.c"
+    INCLUDE_DIRS
+        "."
+    REQUIRES
+        dct3
+        driver
+        esp_timer
+        esp_partition
+        esp_rom
+        heap
+        vfs
+)

@@ -1,0 +1,31 @@
+# Hot emulator objects -> internal IRAM instead of the flash cache.
+#
+# The ARM interpreter has a very large instruction working set (isa-thumb,
+# decoder-thumb, the memory vtable and the MAD2 register handlers all run for
+# every guest instruction), so with 32 KiB of I-cache almost every step used to
+# miss and re-fetch code from flash.  Putting the per-instruction objects in
+# IRAM removes the cache misses and the flash contention with the other task.
+#
+# isa-arm / decoder-arm (175 KiB combined) stay in flash: the 3310 firmware
+# runs Thumb almost everywhere and only touches ARM mode on reset and in the
+# exception vectors, so they do not pay for themselves in IRAM.
+#
+# Keep this list in sync with the object sizes printed by
+#   xtensa-esp32s3-elf-size build/esp-idf/dct3/CMakeFiles/__idf_dct3.dir/...
+# Register and timer handlers are also hot: keeping them in IRAM avoids
+# competing with the much larger ARM-mode interpreter for the flash cache.
+[mapping:dct3_hot]
+archive: libdct3.a
+entries:
+    arm (noflash)
+    decoder-thumb (noflash)
+    isa-thumb (noflash)
+    decoder (noflash)
+    dct3_core (noflash)
+    runloop (noflash)
+    fault (noflash)
+    mad2_bus (noflash)
+    mad2_timers (noflash)
+    mad2_keypad (noflash)
+    dsp_rom6 (noflash)
+    dsp_tone (noflash)

@@ -1,0 +1,23 @@
+# ESP-IDF generated files
+/build/
+/sdkconfig
+/sdkconfig.old
+
+# Nokia firmware dumps are copyrighted and must stay local
+*.fls
+*.ppm
+*.pm
+
+# Python / editor / OS state
+__pycache__/
+*.py[cod]
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local logs and captures
+*.log
+*.pgm
+*.png
+
